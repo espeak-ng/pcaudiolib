@@ -1,0 +1,44 @@
+# build artefacts:
+
+*.o
+*.lo
+
+# vi/vim editor files:
+
+*~
+.*.swp
+
+# build output:
+
+src/libpcaudio.a
+src/libpcaudio.la
+
+# autotools output:
+
+Makefile
+Makefile.in
+
+m4/
+.libs/
+.deps/
+.dirstamp
+
+README
+NEWS
+INSTALL
+aclocal.m4
+autom4te.cache/
+ChangeLog
+compile
+config.h
+config.h.in
+config.h.in~
+config.log
+config.status
+configure
+depcomp
+install-sh
+missing
+stamp-h1
+libtool
+ltmain.sh
