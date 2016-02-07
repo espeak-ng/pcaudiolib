@@ -49,11 +49,14 @@ libpcaudio_include_HEADERS = \
 lib_LTLIBRARIES += src/libpcaudio.la
 
 src_libpcaudio_la_LDFLAGS = -version-info $(LIBPCAUDIO_VERSION) \
+	${ALSA_LIBS} \
 	${PULSEAUDIO_LIBS}
 
 src_libpcaudio_la_CFLAGS = ${AM_CFLAGS} \
+	${ALSA_CFLAGS} \
 	${PULSEAUDIO_CFLAGS}
 
 src_libpcaudio_la_SOURCES = \
+	src/alsa.c \
 	src/pulseaudio.c \
 	src/audio.c

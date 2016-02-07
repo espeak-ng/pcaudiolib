@@ -67,5 +67,10 @@ create_audio_device_object(const char *device,
                            const char *application_name,
                            const char *description)
 {
-	return create_pulseaudio_object(device, application_name, description);
+	struct audio_object *object;
+	if ((object = create_pulseaudio_object(device, application_name, description)) != NULL)
+		return object;
+	if ((object = create_alsa_object(device, application_name, description)) != NULL)
+		return object;
+	return NULL;
 }

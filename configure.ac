@@ -42,6 +42,30 @@ AC_SUBST(PULSEAUDIO_CFLAGS)
 AC_SUBST(PULSEAUDIO_LIBS)
 
 dnl ================================================================
+dnl ALSA checks.
+dnl ================================================================
+
+AC_ARG_WITH([alsa],
+    [AS_HELP_STRING([--with-alsa], [support for ALSA audio output @<:@default=yes@:>@])],
+    [])
+
+if test "$with_alsa" = "no"; then
+    echo "Disabling ALSA audio output support"
+    have_alsa=no
+else
+    PKG_CHECK_MODULES(ALSA, [alsa],
+        [
+            AC_DEFINE(HAVE_ALSA_ASOUNDLIB_H, [], [Do we have ALSA])
+            have_alsa=yes
+        ],[
+            have_alsa=no
+        ])
+fi
+
+AC_SUBST(ALSA_CFLAGS)
+AC_SUBST(ALSA_LIBS)
+
+dnl ================================================================
 dnl Generate output.
 dnl ================================================================
 
@@ -58,4 +82,5 @@ AC_MSG_NOTICE([
         Compiler flags:                ${CFLAGS}
 
 	PulseAudio support:            ${have_pulseaudio}
+	ALSA support:                  ${have_alsa}
 ])
