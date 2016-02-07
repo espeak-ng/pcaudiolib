@@ -21,4 +21,63 @@
 #ifndef PCAUDIOLIB_AUDIO_H
 #define PCAUDIOLIB_AUDIO_H
 
+#include <stdint.h>
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+enum audio_object_format
+{
+	AUDIO_OBJECT_FORMAT_ALAW,
+	AUDIO_OBJECT_FORMAT_ULAW,
+	AUDIO_OBJECT_FORMAT_U8,
+	AUDIO_OBJECT_FORMAT_S16LE,
+	AUDIO_OBJECT_FORMAT_S16BE,
+	AUDIO_OBJECT_FORMAT_S24LE,
+	AUDIO_OBJECT_FORMAT_S24BE,
+	AUDIO_OBJECT_FORMAT_S24_32LE,
+	AUDIO_OBJECT_FORMAT_S24_32BE,
+	AUDIO_OBJECT_FORMAT_S32LE,
+	AUDIO_OBJECT_FORMAT_S32BE,
+	AUDIO_OBJECT_FORMAT_FLOAT32LE,
+	AUDIO_OBJECT_FORMAT_FLOAT32BE,
+};
+
+struct audio_object;
+
+int
+audio_object_open(struct audio_object *object,
+                  enum audio_object_format format,
+                  uint32_t rate,
+                  uint8_t channels);
+
+void
+audio_object_close(struct audio_object *object);
+
+void
+audio_object_destroy(struct audio_object *object);
+
+int
+audio_object_write(struct audio_object *object,
+                        const void *data,
+                        size_t bytes);
+
+int
+audio_object_drain(struct audio_object *object);
+
+int
+audio_object_flush(struct audio_object *object);
+
+struct audio_object *
+create_audio_device_object(const char *device,
+                           const char *application_name,
+                           const char *description);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

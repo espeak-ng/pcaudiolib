@@ -22,6 +22,10 @@ In order to build the project, you need:
     and `pkg-config`);
 2.  a functional c compiler (e.g. gcc or clang).
 
+Optionally, you need:
+
+1.  the pulseaudio development library to enable pulseaudio output.
+
 ### Debian
 
 Core dependencies:
@@ -30,6 +34,12 @@ Core dependencies:
 |------------|------------------------------------------------------------------|
 | autotools  | `sudo apt-get install make autoconf automake libtool pkg-config` |
 | c compiler | `sudo apt-get install gcc`                                       |
+
+Optional Libraries:
+
+| Dependency     | Install                                    |
+|----------------|--------------------------------------------|
+| pulseaudio     | `sudo apt-get install libpulse-dev`        |
 
 ## Building
 

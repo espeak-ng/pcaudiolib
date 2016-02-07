@@ -18,6 +18,30 @@ AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
 dnl ================================================================
+dnl PulseAudio checks.
+dnl ================================================================
+
+AC_ARG_WITH([pulseaudio],
+    [AS_HELP_STRING([--with-pulseaudio], [support for PulseAudio output @<:@default=yes@:>@])],
+    [])
+
+if test "$with_pulseaudio" = "no"; then
+    echo "Disabling PulseAudio output support"
+    have_pulseaudio=no
+else
+    PKG_CHECK_MODULES(PULSEAUDIO, [libpulse-simple >= 0.9],
+        [
+            AC_DEFINE(HAVE_PULSE_SIMPLE_H, [], [Do we have pulse/simple.h])
+            have_pulseaudio=yes
+        ],[
+            have_pulseaudio=no
+        ])
+fi
+
+AC_SUBST(PULSEAUDIO_CFLAGS)
+AC_SUBST(PULSEAUDIO_LIBS)
+
+dnl ================================================================
 dnl Generate output.
 dnl ================================================================
 
@@ -32,4 +56,6 @@ AC_MSG_NOTICE([
 
         Compiler:                      ${CC}
         Compiler flags:                ${CFLAGS}
+
+	PulseAudio support:            ${have_pulseaudio}
 ])
