@@ -25,7 +25,6 @@
 
 #include <pulse/simple.h>
 #include <string.h>
-#include <stdio.h>
 
 struct pulseaudio_object
 {
