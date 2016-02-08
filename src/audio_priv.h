@@ -63,6 +63,11 @@ create_alsa_object(const char *device,
                    const char *application_name,
                    const char *description);
 
+struct audio_object *
+create_oss_object(const char *device,
+                  const char *application_name,
+                  const char *description);
+
 #ifdef __cplusplus
 }
 #endif

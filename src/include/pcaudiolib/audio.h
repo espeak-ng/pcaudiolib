@@ -77,6 +77,7 @@ enum audio_object_format
 	AUDIO_OBJECT_FORMAT_ADPCM,
 	AUDIO_OBJECT_FORMAT_MPEG,
 	AUDIO_OBJECT_FORMAT_GSM,
+	AUDIO_OBJECT_FORMAT_AC3,
 };
 
 struct audio_object;

@@ -8,8 +8,12 @@
 
 ----------
 
-The Portable C Audio Library (pcaudiolib) supports many different devices with
-an object-orientated C API.
+The Portable C Audio Library (pcaudiolib) provides a C API to different audio
+devices. It supports:
+
+1.  ALSA;
+2.  OSS version 3 and later;
+3.  PulseAudio.
 
 See the [CHANGELOG](CHANGELOG.md) for a description of the changes in the
 various releases.
@@ -24,7 +28,8 @@ In order to build the project, you need:
 
 Optionally, you need:
 
-1.  the pulseaudio development library to enable pulseaudio output.
+1.  the alsa development libraries to enable alsa audio output;
+2.  the pulseaudio development library to enable pulseaudio output.
 
 ### Debian
 
@@ -39,6 +44,7 @@ Optional Libraries:
 
 | Dependency     | Install                                    |
 |----------------|--------------------------------------------|
+| alsa           | `sudo apt-get install libasound2-dev`      |
 | pulseaudio     | `sudo apt-get install libpulse-dev`        |
 
 ## Building

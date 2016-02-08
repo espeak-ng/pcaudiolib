@@ -72,5 +72,7 @@ create_audio_device_object(const char *device,
 		return object;
 	if ((object = create_alsa_object(device, application_name, description)) != NULL)
 		return object;
+	if ((object = create_oss_object(device, application_name, description)) != NULL)
+		return object;
 	return NULL;
 }

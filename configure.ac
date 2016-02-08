@@ -66,6 +66,29 @@ AC_SUBST(ALSA_CFLAGS)
 AC_SUBST(ALSA_LIBS)
 
 dnl ================================================================
+dnl OSS checks.
+dnl ================================================================
+
+AC_ARG_WITH([oss],
+    [AS_HELP_STRING([--with-oss], [support for OSS audio output @<:@default=yes@:>@])],
+    [])
+
+if test "$with_oss" = "no"; then
+    echo "Disabling OSS audio output support"
+    have_oss=no
+else
+    AC_CHECK_HEADERS([sys/soundcard.h],[
+        have_oss=yes
+    ],[
+        AC_CHECK_HEADERS([linux/soundcard.h],[
+            have_oss=yes
+        ],[
+            have_oss=no
+        ])
+    ])
+fi
+
+dnl ================================================================
 dnl Generate output.
 dnl ================================================================
 
@@ -83,4 +106,5 @@ AC_MSG_NOTICE([
 
 	PulseAudio support:            ${have_pulseaudio}
 	ALSA support:                  ${have_alsa}
+	OSS support:                   ${have_oss}
 ])
