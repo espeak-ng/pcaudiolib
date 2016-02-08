@@ -83,7 +83,11 @@ else
         AC_CHECK_HEADERS([linux/soundcard.h],[
             have_oss=yes
         ],[
-            have_oss=no
+            AC_CHECK_HEADERS([soundcard.h],[
+                have_oss=yes
+            ],[
+                have_oss=no
+            ])
         ])
     ])
 fi

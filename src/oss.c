@@ -27,6 +27,9 @@
 #elif defined(HAVE_LINUX_SOUNDCARD_H)
 #include <linux/soundcard.h>
 #define DEFAULT_OSS_DEVICE "/dev/dsp"
+#elif defined(HAVE_SOUNDCARD_H)
+#include <soundcard.h>
+#define DEFAULT_OSS_DEVICE "/dev/dsp"
 #endif
 
 #ifdef DEFAULT_OSS_DEVICE
