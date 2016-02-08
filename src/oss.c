@@ -73,7 +73,9 @@ oss_object_open(struct audio_object *object,
 	case AUDIO_OBJECT_FORMAT_U16BE: oss_format = AFMT_U16_BE;    break;
 	case AUDIO_OBJECT_FORMAT_ADPCM: oss_format = AFMT_IMA_ADPCM; break;
 	case AUDIO_OBJECT_FORMAT_MPEG:  oss_format = AFMT_MPEG;      break;
+#if defined AFMT_AC3
 	case AUDIO_OBJECT_FORMAT_AC3:   oss_format = AFMT_AC3;       break;
+#endif
 	default:                        return -EINVAL;
 	}
 
