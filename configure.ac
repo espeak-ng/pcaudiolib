@@ -78,12 +78,15 @@ if test "$with_oss" = "no"; then
     have_oss=no
 else
     AC_CHECK_HEADERS([sys/soundcard.h],[
+        AC_CHECK_LIB(ossaudio, _oss_ioctl)
         have_oss=yes
     ],[
         AC_CHECK_HEADERS([linux/soundcard.h],[
+            AC_CHECK_LIB(ossaudio, _oss_ioctl)
             have_oss=yes
         ],[
             AC_CHECK_HEADERS([soundcard.h],[
+                AC_CHECK_LIB(ossaudio, _oss_ioctl)
                 have_oss=yes
             ],[
                 have_oss=no
