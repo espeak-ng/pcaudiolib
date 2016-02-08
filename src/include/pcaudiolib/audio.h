@@ -96,8 +96,8 @@ audio_object_destroy(struct audio_object *object);
 
 int
 audio_object_write(struct audio_object *object,
-                        const void *data,
-                        size_t bytes);
+                   const void *data,
+                   size_t bytes);
 
 int
 audio_object_drain(struct audio_object *object);
