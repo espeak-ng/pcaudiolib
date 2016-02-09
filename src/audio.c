@@ -27,19 +27,23 @@ audio_object_open(struct audio_object *object,
                   uint32_t rate,
                   uint8_t channels)
 {
-	return object->open(object, format, rate, channels);
+	if (object)
+		return object->open(object, format, rate, channels);
+	return 0;
 }
 
 void
 audio_object_close(struct audio_object *object)
 {
-	object->close(object);
+	if (object)
+		object->close(object);
 }
 
 void
 audio_object_destroy(struct audio_object *object)
 {
-	object->destroy(object);
+	if (object)
+		object->destroy(object);
 }
 
 int
@@ -47,26 +51,34 @@ audio_object_write(struct audio_object *object,
                    const void *data,
                    size_t bytes)
 {
-	return object->write(object, data, bytes);
+	if (object)
+		return object->write(object, data, bytes);
+	return 0;
 }
 
 int
 audio_object_drain(struct audio_object *object)
 {
-	return object->drain(object);
+	if (object)
+		return object->drain(object);
+	return 0;
 }
 
 int
 audio_object_flush(struct audio_object *object)
 {
-	return object->flush(object);
+	if (object)
+		return object->flush(object);
+	return 0;
 }
 
 const char *
 audio_object_strerror(struct audio_object *object,
                       int error)
 {
-	return object->strerror(object, error);
+	if (object)
+		return object->strerror(object, error);
+	return NULL;
 }
 
 struct audio_object *
