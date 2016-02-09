@@ -105,6 +105,10 @@ audio_object_drain(struct audio_object *object);
 int
 audio_object_flush(struct audio_object *object);
 
+const char *
+audio_object_strerror(struct audio_object *object,
+                      int error);
+
 struct audio_object *
 create_audio_device_object(const char *device,
                            const char *application_name,

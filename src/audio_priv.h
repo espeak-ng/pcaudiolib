@@ -47,6 +47,9 @@ struct audio_object
 	int (*drain)(struct audio_object *object);
 
 	int (*flush)(struct audio_object *object);
+
+	const char * (*strerror)(struct audio_object *object,
+	                         int error);
 };
 
 #define container_of(ptr, type, member) ({                      \

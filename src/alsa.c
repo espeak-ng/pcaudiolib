@@ -172,6 +172,13 @@ alsa_object_write(struct audio_object *object,
 	return err;
 }
 
+const char *
+alsa_object_strerror(struct audio_object *object,
+                     int error)
+{
+	return snd_strerror(error);
+}
+
 struct audio_object *
 create_alsa_object(const char *device,
                    const char *application_name,
@@ -191,6 +198,7 @@ create_alsa_object(const char *device,
 	self->vtable.write = alsa_object_write;
 	self->vtable.drain = alsa_object_drain;
 	self->vtable.flush = alsa_object_flush;
+	self->vtable.strerror = alsa_object_strerror;
 
 	return &self->vtable;
 }

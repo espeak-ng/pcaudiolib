@@ -62,6 +62,13 @@ audio_object_flush(struct audio_object *object)
 	return object->flush(object);
 }
 
+const char *
+audio_object_strerror(struct audio_object *object,
+                      int error)
+{
+	return object->strerror(object, error);
+}
+
 struct audio_object *
 create_audio_device_object(const char *device,
                            const char *application_name,

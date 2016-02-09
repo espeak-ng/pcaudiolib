@@ -76,7 +76,7 @@ oss_object_open(struct audio_object *object,
 #if defined AFMT_AC3
 	case AUDIO_OBJECT_FORMAT_AC3:   oss_format = AFMT_AC3;       break;
 #endif
-	default:                        return -EINVAL;
+	default:                        return EINVAL;
 	}
 
 	int data;
@@ -151,6 +151,13 @@ oss_object_write(struct audio_object *object,
 	return 0;
 }
 
+const char *
+oss_object_strerror(struct audio_object *object,
+                    int error)
+{
+	return strerror(error);
+}
+
 struct audio_object *
 create_oss_object(const char *device,
                   const char *application_name,
@@ -169,6 +176,7 @@ create_oss_object(const char *device,
 	self->vtable.write = oss_object_write;
 	self->vtable.drain = oss_object_drain;
 	self->vtable.flush = oss_object_flush;
+	self->vtable.strerror = oss_object_strerror;
 
 	return &self->vtable;
 }

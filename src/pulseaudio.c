@@ -23,6 +23,7 @@
 
 #ifdef HAVE_PULSE_SIMPLE_H
 
+#include <pulse/error.h>
 #include <pulse/simple.h>
 #include <string.h>
 
@@ -138,6 +139,13 @@ pulseaudio_object_write(struct audio_object *object,
 	return error;
 }
 
+const char *
+pulseaudio_object_strerror(struct audio_object *object,
+                           int error)
+{
+	return pa_strerror(error);
+}
+
 struct audio_object *
 create_pulseaudio_object(const char *device,
                          const char *application_name,
@@ -158,6 +166,7 @@ create_pulseaudio_object(const char *device,
 	self->vtable.write = pulseaudio_object_write;
 	self->vtable.drain = pulseaudio_object_drain;
 	self->vtable.flush = pulseaudio_object_flush;
+	self->vtable.strerror = pulseaudio_object_strerror;
 
 	return &self->vtable;
 }
