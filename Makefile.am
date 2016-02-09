@@ -58,6 +58,7 @@ src_libpcaudio_la_CFLAGS = ${AM_CFLAGS} \
 
 src_libpcaudio_la_SOURCES = \
 	src/alsa.c \
+	src/qsa.c \
 	src/oss.c \
 	src/pulseaudio.c \
 	src/audio.c
