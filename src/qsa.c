@@ -22,7 +22,7 @@
 #include "config.h"
 #include "audio_priv.h"
 
-#ifdef HAVE_SYS_ASOUNDLIB_H
+#if defined(HAVE_SYS_ASOUNDLIB_H) && defined(HAVE_SYS_ASOUND_H)
 
 #include <sys/asound.h>
 #include <sys/asoundlib.h>

@@ -78,10 +78,12 @@ if test "$with_qsa" = "no"; then
     have_qsa=no
 else
     AC_CHECK_HEADERS([sys/asoundlib.h],[
-       have_qsa=yes
-       QSA_LIBS=-lasound
-    ],[
-       have_qsa=no
+        AC_CHECK_HEADERS([sys/asound.h],[
+            have_qsa=yes
+            QSA_LIBS=-lasound
+        ],[
+            have_qsa=no
+        ])
     ])
 fi
 
