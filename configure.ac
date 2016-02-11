@@ -66,6 +66,28 @@ AC_SUBST(ALSA_CFLAGS)
 AC_SUBST(ALSA_LIBS)
 
 dnl ================================================================
+dnl QSA checks.
+dnl ================================================================
+
+AC_ARG_WITH([qsa],
+    [AS_HELP_STRING([--with-qsa], [support for QSA audio output @<:@default=yes@:>@])],
+    [])
+
+if test "$with_qsa" = "no"; then
+    echo "Disabling QSA audio output support"
+    have_qsa=no
+else
+    AC_CHECK_HEADERS([sys/asoundlib.h],[
+       have_qsa=yes
+       QSA_LIBS=-lasound
+    ],[
+       have_qsa=no
+    ])
+fi
+
+AC_SUBST(QSA_LIBS)
+
+dnl ================================================================
 dnl OSS checks.
 dnl ================================================================
 
@@ -113,5 +135,6 @@ AC_MSG_NOTICE([
 
 	PulseAudio support:            ${have_pulseaudio}
 	ALSA support:                  ${have_alsa}
+	QSA support:                   ${have_qsa}
 	OSS support:                   ${have_oss}
 ])

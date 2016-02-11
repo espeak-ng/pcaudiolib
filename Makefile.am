@@ -50,7 +50,8 @@ lib_LTLIBRARIES += src/libpcaudio.la
 
 src_libpcaudio_la_LDFLAGS = -version-info $(LIBPCAUDIO_VERSION) \
 	${ALSA_LIBS} \
-	${PULSEAUDIO_LIBS}
+	${PULSEAUDIO_LIBS} \
+	${QSA_LIBS}
 
 src_libpcaudio_la_CFLAGS = ${AM_CFLAGS} \
 	${ALSA_CFLAGS} \
@@ -58,6 +59,7 @@ src_libpcaudio_la_CFLAGS = ${AM_CFLAGS} \
 
 src_libpcaudio_la_SOURCES = \
 	src/alsa.c \
+	src/qsa.c \
 	src/oss.c \
 	src/pulseaudio.c \
 	src/audio.c
