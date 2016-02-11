@@ -79,10 +79,13 @@ if test "$with_qsa" = "no"; then
 else
     AC_CHECK_HEADERS([sys/asoundlib.h],[
        have_qsa=yes
+       QSA_LIBS=-lasound
     ],[
        have_qsa=no
     ])
 fi
+
+AC_SUBST(QSA_LIBS)
 
 dnl ================================================================
 dnl OSS checks.
