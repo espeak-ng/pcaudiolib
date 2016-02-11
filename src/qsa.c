@@ -95,8 +95,11 @@ qsa_object_open(struct audio_object *object,
 	pp.start_mode = SND_PCM_START_FULL;
 	pp.stop_mode = SND_PCM_STOP_STOP;
 
+	fprintf (stderr, "qsa: max frag size %d\n", pci.max_fragment_size);
+	fprintf (stderr, "qsa: min frag size %d\n", pci.min_fragment_size);
+
 	pp.buf.block.frag_size = pci.max_fragment_size;
-	pp.buf.block.frags_max = 4; // xxx 
+	pp.buf.block.frags_max = 4; // XXX: What should this be?
 	pp.buf.block.frags_min = 1;
 
 	pp.format.interleave = 1;
@@ -165,9 +168,15 @@ qsa_object_write(struct audio_object *object,
 {
 	struct qsa_object *self = to_qsa_object(object);
 
-	int err = snd_pcm_plugin_write(self->handle, data, bytes / self->sample_size);
-	if (err == -EPIPE) // underrun
-		err = snd_pcm_prepare(self->handle);
+	int err = snd_pcm_plugin_write(self->handle, data, bytes);
+	if (err == -EPIPE) {// underrun
+		fprintf (stderr, "qsa: pipe error %s\n", snd_strerror(err));
+		err = snd_pcm_plugin_prepare(self->handle, SND_PCM_CHANNEL_PLAYBACK);
+		if (err < 0)
+			fprintf (stderr, "qsa: prepare error %s\n", snd_strerror(err));
+	} else if (err <0 ) {
+			fprintf (stderr, "qsa: write error %s\n", snd_strerror(err));
+	}
 	return err;
 }
 
