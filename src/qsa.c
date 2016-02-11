@@ -61,22 +61,32 @@ qsa_object_open(struct audio_object *object,
 	}
 #undef  FORMAT
 
-	snd_pcm_channel_info_t pi;
+	snd_pcm_info_t pi;
+	snd_pcm_channel_info_t pci;
 	snd_pcm_channel_params_t pp;
 	snd_pcm_channel_setup_t setup;
 
 	int err = 0;
-	if (self->device)
+	if (self->device) {
+		fprintf (stderr, "qsa: open %s\n", self->device);
 		if ((err = snd_pcm_open_name(&self->handle, self->device, SND_PCM_OPEN_PLAYBACK)) < 0)
 			goto error;
-	else
+	} else {
+		fprintf (stderr, "qsa: open preferred\n");
 		if ((err = snd_pcm_open_preferred(&self->handle, NULL, NULL, SND_PCM_OPEN_PLAYBACK)) < 0)
 			goto error;
+	}
 
 	memset (&pi, 0, sizeof (pi));
-	pi.channel = SND_PCM_CHANNEL_PLAYBACK;
+	fprintf (stderr, "qsa: info\n");
+	if ((err = snd_pcm_info (self->handle, &pi)) < 0)
+		goto error;
 
-	if ((err = snd_pcm_plugin_info (self->handle, &pi)) < 0)
+	memset (&pci, 0, sizeof (pci));
+	pci.channel = SND_PCM_CHANNEL_PLAYBACK;
+
+	fprintf (stderr, "qsa: plugin info\n");
+	if ((err = snd_pcm_plugin_info (self->handle, &pci)) < 0)
 		goto error;
 
 	memset (&pp, 0, sizeof (pp));
@@ -85,7 +95,7 @@ qsa_object_open(struct audio_object *object,
 	pp.start_mode = SND_PCM_START_FULL;
 	pp.stop_mode = SND_PCM_STOP_STOP;
 
-	pp.buf.block.frag_size = pi.max_fragment_size;
+	pp.buf.block.frag_size = pci.max_fragment_size;
 	pp.buf.block.frags_max = 4; // xxx 
 	pp.buf.block.frags_min = 1;
 
@@ -94,15 +104,17 @@ qsa_object_open(struct audio_object *object,
 	pp.format.voices = channels;
 	pp.format.format = pcm_format;
 
+	fprintf (stderr, "qsa: params\n");
 	if ((err = snd_pcm_plugin_params (self->handle, &pp)) < 0)
 		goto error;
 
+	fprintf (stderr, "qsa: prepare\n");
 	if ((err = snd_pcm_plugin_prepare (self->handle, SND_PCM_CHANNEL_PLAYBACK)) < 0)
 		goto error;
 
 	return 0;
 error:
-	fprintf (stderr, "qsa: %s\n", snd_strerror(err));
+	fprintf (stderr, "qsa: snd error %s\n", snd_strerror(err));
 	if (self->handle) {
 		snd_pcm_close(self->handle);
 		self->handle = NULL;
