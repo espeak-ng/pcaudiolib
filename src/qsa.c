@@ -42,9 +42,9 @@ struct qsa_object
 
 int
 qsa_object_open(struct audio_object *object,
-                 enum audio_object_format format,
-                 uint32_t rate,
-                 uint8_t channels)
+                enum audio_object_format format,
+                uint32_t rate,
+                uint8_t channels)
 {
 	struct qsa_object *self = to_qsa_object(object);
 	if (self->handle)
@@ -56,8 +56,8 @@ qsa_object_open(struct audio_object *object,
 	{
 	FORMAT(AUDIO_OBJECT_FORMAT_U8,     SND_PCM_SFMT_U8, 1)
 	FORMAT(AUDIO_OBJECT_FORMAT_S8,     SND_PCM_SFMT_S8, 1)
-	FORMAT(AUDIO_OBJECT_FORMAT_S16LE,     SND_PCM_SFMT_S16_LE, 2)
-	default:                              return -EINVAL;
+	FORMAT(AUDIO_OBJECT_FORMAT_S16LE,  SND_PCM_SFMT_S16_LE, 2)
+	default:                           return -EINVAL;
 	}
 #undef  FORMAT
 
@@ -163,8 +163,8 @@ qsa_object_flush(struct audio_object *object)
 
 int
 qsa_object_write(struct audio_object *object,
-                  const void *data,
-                  size_t bytes)
+                 const void *data,
+                 size_t bytes)
 {
 	struct qsa_object *self = to_qsa_object(object);
 
@@ -182,15 +182,15 @@ qsa_object_write(struct audio_object *object,
 
 const char *
 qsa_object_strerror(struct audio_object *object,
-                     int error)
+                    int error)
 {
 	return snd_strerror(error);
 }
 
 struct audio_object *
 create_qsa_object(const char *device,
-                   const char *application_name,
-                   const char *description)
+                  const char *application_name,
+                  const char *description)
 {
 	struct qsa_object *self = malloc(sizeof(struct qsa_object));
 	if (!self)
