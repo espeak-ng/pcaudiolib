@@ -70,7 +70,7 @@ qsa_object_open(struct audio_object *object,
 		if ((err = snd_pcm_open_name(&self->handle, self->device, SND_PCM_OPEN_PLAYBACK)) < 0)
 			goto error;
 	else
-		if ((err = snd_pcm_open_prefered(&self->handle, NULL, NULL, SND_PCM_OPEN_PLAYBACK)) < 0)
+		if ((err = snd_pcm_open_preferred(&self->handle, NULL, NULL, SND_PCM_OPEN_PLAYBACK)) < 0)
 			goto error;
 
 	memset (&pi, 0, sizeof (pi));
