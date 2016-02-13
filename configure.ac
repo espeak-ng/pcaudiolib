@@ -84,6 +84,8 @@ else
         ],[
             have_qsa=no
         ])
+    ],[
+        have_qsa=no
     ])
 fi
 
