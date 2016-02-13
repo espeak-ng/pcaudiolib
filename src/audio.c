@@ -87,6 +87,10 @@ create_audio_device_object(const char *device,
                            const char *description)
 {
 	struct audio_object *object;
+#if defined(_WIN32) || defined(_WIN64)
+	if ((object = create_xaudio2_object(device, application_name, description)) != NULL)
+		return object;
+#else
 	if ((object = create_pulseaudio_object(device, application_name, description)) != NULL)
 		return object;
 	if ((object = create_alsa_object(device, application_name, description)) != NULL)
@@ -95,5 +99,6 @@ create_audio_device_object(const char *device,
 		return object;
 	if ((object = create_oss_object(device, application_name, description)) != NULL)
 		return object;
+#endif
 	return NULL;
 }
