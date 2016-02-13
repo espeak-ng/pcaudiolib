@@ -11,9 +11,13 @@
 The Portable C Audio Library (pcaudiolib) provides a C API to different audio
 devices. It supports:
 
-1.  ALSA;
-2.  OSS version 3 and later;
-3.  PulseAudio.
+| Audio Framework | Operating System |
+|=================|==================|
+| ALSA            | Linux            |
+| OSS             | POSIX            |
+| PulseAudio      | Linux            |
+| QSA             | QNX              |
+| XAudio2         | Windows          |
 
 See the [CHANGELOG](CHANGELOG.md) for a description of the changes in the
 various releases.
@@ -25,6 +29,9 @@ In order to build the project, you need:
 1.  a functional autotools system (`make`, `autoconf`, `automake`, `libtool`
     and `pkg-config`);
 2.  a functional c compiler (e.g. gcc or clang).
+
+__NOTE:__ Some of the Windows SDK APIs (e.g. the XAudio2 headers) don't compile
+with a C compiler, so a C++ compiler is needed to compile them.
 
 Optionally, you need:
 
