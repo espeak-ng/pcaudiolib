@@ -156,11 +156,29 @@ qsa_object_write(struct audio_object *object,
                  size_t bytes)
 {
 	struct qsa_object *self = to_qsa_object(object);
+	snd_pcm_channel_status_t status;
+	size_t written = snd_pcm_plugin_write(self->handle, data, bytes);
 
-	int err = snd_pcm_plugin_write(self->handle, data, bytes);
-	if (err == -EPIPE) // underrun
-		err = snd_pcm_plugin_prepare(self->handle, SND_PCM_CHANNEL_PLAYBACK);
-	return err;
+	if (written < bytes) {
+		int err;
+
+		memset (&status, 0, sizeof (status));
+                status.channel = SND_PCM_CHANNEL_PLAYBACK;
+
+                err=snd_pcm_plugin_status (self->handle, &status);
+                if (err < 0) {
+			return err;
+		}
+
+		if (status.status == SND_PCM_STATUS_READY || status.status == SND_PCM_STATUS_UNDERRUN) {
+			err = snd_pcm_plugin_prepare(self->handle, SND_PCM_CHANNEL_PLAYBACK);
+			// Try again if we can
+			if (err==0 && written==0)
+				return snd_pcm_plugin_write(self->handle, data, bytes);
+		}
+		return err;
+	}
+	return written;
 }
 
 const char *
