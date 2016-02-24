@@ -12,7 +12,7 @@ The Portable C Audio Library (pcaudiolib) provides a C API to different audio
 devices. It supports:
 
 | Audio Framework | Operating System |
-|=================|==================|
+|-----------------|------------------|
 | ALSA            | Linux            |
 | OSS             | POSIX            |
 | PulseAudio      | Linux            |
