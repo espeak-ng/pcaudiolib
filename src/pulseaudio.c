@@ -26,6 +26,7 @@
 #include <pulse/error.h>
 #include <pulse/simple.h>
 #include <string.h>
+#include <stdbool.h>
 
 struct pulseaudio_object
 {
@@ -146,11 +147,41 @@ pulseaudio_object_strerror(struct audio_object *object,
 	return pa_strerror(error);
 }
 
+static bool
+pulseaudio_is_available(const char *device,
+                        const char *application_name,
+                        const char *description)
+{
+	pa_sample_spec ss;
+	ss.format = PA_SAMPLE_S16LE;
+	ss.rate = 44100;
+	ss.channels = 1;
+
+	pa_simple *s = pa_simple_new(NULL,
+	                             application_name,
+	                             PA_STREAM_PLAYBACK,
+	                             device,
+	                             description,
+	                             &ss,
+	                             NULL,
+	                             NULL,
+	                             NULL);
+
+	if (!s)
+		return false;
+
+	pa_simple_free(s);
+	return true;
+}
+
 struct audio_object *
 create_pulseaudio_object(const char *device,
                          const char *application_name,
                          const char *description)
 {
+	if (!pulseaudio_is_available(device, application_name, description))
+		return NULL;
+
 	struct pulseaudio_object *self = malloc(sizeof(struct pulseaudio_object));
 	if (!self)
 		return NULL;
