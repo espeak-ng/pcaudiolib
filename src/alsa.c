@@ -169,7 +169,7 @@ alsa_object_write(struct audio_object *object,
 	int err = snd_pcm_writei(self->handle, data, bytes / self->sample_size);
 	if (err == -EPIPE) // underrun
 		err = snd_pcm_prepare(self->handle);
-	return err;
+	return err >= 0 ? 0 : err;
 }
 
 const char *
