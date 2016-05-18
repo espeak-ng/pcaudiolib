@@ -178,7 +178,7 @@ qsa_object_write(struct audio_object *object,
 		}
 		return err;
 	}
-	return written;
+	return 0;
 }
 
 const char *
