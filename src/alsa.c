@@ -166,7 +166,17 @@ alsa_object_write(struct audio_object *object,
 {
 	struct alsa_object *self = to_alsa_object(object);
 
-	int err = snd_pcm_writei(self->handle, data, bytes / self->sample_size);
+	int err = 0;
+	snd_pcm_state_t state = snd_pcm_state(self->handle);
+
+// State needs to be PREPARED or RUNNING if we want to write.
+	if (state != SND_PCM_STATE_PREPARED && state != SND_PCM_STATE_RUNNING) {
+		err = snd_pcm_prepare(self->handle);
+		if (err)
+			return err;
+	}
+
+	err = snd_pcm_writei(self->handle, data, bytes / self->sample_size);
 	if (err == -EPIPE) // underrun
 		err = snd_pcm_prepare(self->handle);
 	return err >= 0 ? 0 : err;
