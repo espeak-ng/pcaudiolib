@@ -148,7 +148,7 @@ alsa_object_drain(struct audio_object *object)
 {
 	struct alsa_object *self = to_alsa_object(object);
 
-	return snd_pcm_drain(self->handle);
+	return self->handle ? snd_pcm_drain(self->handle) : 0;
 }
 
 int
@@ -156,7 +156,7 @@ alsa_object_flush(struct audio_object *object)
 {
 	struct alsa_object *self = to_alsa_object(object);
 
-	return snd_pcm_drop(self->handle);
+	return self->handle ? snd_pcm_drop(self->handle) : 0;
 }
 
 int
@@ -165,6 +165,8 @@ alsa_object_write(struct audio_object *object,
                   size_t bytes)
 {
 	struct alsa_object *self = to_alsa_object(object);
+	if (!self->handle)
+		return 0;
 
 	int err = 0;
 	snd_pcm_state_t state = snd_pcm_state(self->handle);
