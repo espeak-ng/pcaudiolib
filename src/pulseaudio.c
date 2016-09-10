@@ -112,6 +112,8 @@ int
 pulseaudio_object_drain(struct audio_object *object)
 {
 	struct pulseaudio_object *self = to_pulseaudio_object(object);
+	if (!self->s)
+		return 0;
 
 	int error = 0;
 	pa_simple_drain(self->s, &error);
@@ -122,6 +124,8 @@ int
 pulseaudio_object_flush(struct audio_object *object)
 {
 	struct pulseaudio_object *self = to_pulseaudio_object(object);
+	if (!self->s)
+		return 0;
 
 	int error = 0;
 	pa_simple_flush(self->s, &error);
@@ -134,6 +138,8 @@ pulseaudio_object_write(struct audio_object *object,
                         size_t bytes)
 {
 	struct pulseaudio_object *self = to_pulseaudio_object(object);
+	if (!self->s)
+		return 0;
 
 	int error = 0;
 	pa_simple_write(self->s, data, bytes, &error);
