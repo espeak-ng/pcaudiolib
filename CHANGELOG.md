@@ -1,6 +1,6 @@
 # Change Log
 
-## (In Development)
+## 1.0 \[10 Sep 2016\]
 
 *  Provide a consistent API for accessing the different audio interfaces.
 *  Support for PulseAudio using the simple API.

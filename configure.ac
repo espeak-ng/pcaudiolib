@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([Portable C Audio Library], [0.1], [https://github.com/rhdunn/pcaudiolib/issues], [], [https://github.com/rhdunn/pcaudiolib])
+AC_INIT([Portable C Audio Library], [1.0], [https://github.com/rhdunn/pcaudiolib/issues], [], [https://github.com/rhdunn/pcaudiolib])
 AM_INIT_AUTOMAKE()
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES])
