@@ -169,22 +169,23 @@ alsa_object_write(struct audio_object *object,
 		return 0;
 
 	int err = 0;
-	snd_pcm_state_t state = snd_pcm_state(self->handle);
-
-// State needs to be PREPARED or RUNNING if we want to write.
-	if (state != SND_PCM_STATE_PREPARED && state != SND_PCM_STATE_RUNNING) {
-		err = snd_pcm_prepare(self->handle);
-		if (err)
-			return err;
-	}
+	snd_pcm_uframes_t nToWrite = bytes / self->sample_size; // Number of frames to write.
+	snd_pcm_sframes_t nWritten = 0; // And number alsa actually wrote.
 
 	while (1) {
-		err = snd_pcm_writei(self->handle, data, bytes / self->sample_size);
-		if (err == -EPIPE) { // underrun
+		nWritten = snd_pcm_writei(self->handle, data, nToWrite);
+		if ((nWritten >= 0) && (nWritten < nToWrite)) {
+// Can happen in case of a signal or underrun.
+			nToWrite -= nWritten;
+			data += nWritten * self->sample_size;
+// Open question: if a signal caused the short read, should we snd_pcm_prepare?
+		} else if ((nWritten == -EPIPE) || (nWritten == -EBADFD)) {
+// Either there was an underrun or the PCM was in a bad state.
 			err = snd_pcm_prepare(self->handle);
 			if (err != 0)
 				break;
 		} else {
+			err = nWritten;
 			break;
 		}
 	}
