@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1 - (In Development)
+
+*  Fix handling EBADFD, EPIPE and short write when writing to the ALSA device.
+*  Experimental support for Mac OS CoreAudio.
+
 ## 1.0 \[10 Sep 2016\]
 
 *  Provide a consistent API for accessing the different audio interfaces.
