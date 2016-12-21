@@ -147,16 +147,26 @@ int
 alsa_object_drain(struct audio_object *object)
 {
 	struct alsa_object *self = to_alsa_object(object);
+	int ret = 0;
 
-	return self->handle ? snd_pcm_drain(self->handle) : 0;
+	if (self->handle) {
+		snd_pcm_drain(self->handle);
+		ret = snd_pcm_prepare(self->handle);
+	}
+	return ret;
 }
 
 int
 alsa_object_flush(struct audio_object *object)
 {
+	int ret = 0;
 	struct alsa_object *self = to_alsa_object(object);
 
-	return self->handle ? snd_pcm_drop(self->handle) : 0;
+	if (self->handle) {
+		snd_pcm_drop(self->handle);
+		ret = snd_pcm_prepare(self->handle);
+	}
+	return ret;
 }
 
 int
