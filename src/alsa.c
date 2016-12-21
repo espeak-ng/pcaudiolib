@@ -18,6 +18,7 @@
  * along with pcaudiolib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <unistd.h>
 #include "config.h"
 #include "audio_priv.h"
 
@@ -194,6 +195,20 @@ alsa_object_write(struct audio_object *object,
 			err = snd_pcm_prepare(self->handle);
 			if (err != 0)
 				break;
+		} else if (nWritten == -ESTRPIPE) {
+			// Sound suspended, try to resume.
+			do {
+				err = snd_pcm_resume(self->handle);
+				sleep(1);
+			} while (err == -EAGAIN);
+			if (err == -ENOSYS) {
+				// Hardware doesn't support "fine resume".
+				// So just prepare.
+				err = snd_pcm_prepare(self->handle);
+			}
+			if (err < 0) {
+				break;
+			}
 		} else {
 			err = nWritten;
 			break;
