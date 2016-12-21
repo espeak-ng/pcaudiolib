@@ -105,14 +105,15 @@ if test "$with_coreaudio" = "no";then
     echo "Disabling coreaudio audio output support"
     have_coreaudio=no
 else
-    if test "${host_os}"="darwin";then
-        COREAUDIO_CFLAGS=-dynamiclib -fvisibility=default
-        COREAUDIO_LIBS="-framework CoreAudio -framework AudioToolbox -framework AudioUnit"
-        have_coreaudio=yes
-        AC_DEFINE(HAVE_COREAUDIO_H, [], [Do we have coreaudio?])
-    else
-        have_coreaudio=no
-    fi
+    case "${host_os}" in
+        darwin*)
+            COREAUDIO_CFLAGS='-dynamiclib -fvisibility=default'
+            COREAUDIO_LIBS="-framework CoreAudio -framework AudioToolbox -framework AudioUnit"
+            have_coreaudio=yes
+            AC_DEFINE(HAVE_COREAUDIO_H, [], [Do we have coreaudio?]);;
+        *)
+            have_coreaudio=no;;
+    esac
 fi
 
 AC_SUBST(COREAUDIO_CFLAGS)
