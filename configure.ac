@@ -106,7 +106,7 @@ if test "$with_coreaudio" = "no";then
     have_coreaudio=no
 else
     if test "${host_os}"="darwin";then
-        COREAUDIO_CFLAGS=-dynamiclib -fvisibility=default
+        COREAUDIO_CFLAGS="-dynamiclib -fvisibility=default"
         COREAUDIO_LIBS="-framework CoreAudio -framework AudioToolbox -framework AudioUnit"
         have_coreaudio=yes
         AC_DEFINE(HAVE_COREAUDIO_H, [], [Do we have coreaudio?])
