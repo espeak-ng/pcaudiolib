@@ -81,11 +81,13 @@ create_xaudio2_object(const char *device,
 #define container_of(ptr, type, member) ({                      \
         const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
         (type *)( (char *)__mptr - offsetof(type,member) );})
+
 #ifdef __APPLE__
+
 struct audio_object *
 create_coreaudio_object(const char *device,
-						const char *application_name,
-						const char *description);
+                        const char *application_name,
+                        const char *description);
 
 #else
 
@@ -108,6 +110,7 @@ struct audio_object *
 create_oss_object(const char *device,
                   const char *application_name,
                   const char *description);
+
 #endif
 #endif
 
