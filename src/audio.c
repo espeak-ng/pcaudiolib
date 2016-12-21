@@ -91,6 +91,11 @@ create_audio_device_object(const char *device,
 	if ((object = create_xaudio2_object(device, application_name, description)) != NULL)
 		return object;
 #else
+#if defined(__APPLE__)
+	if ((object = create_coreaudio_object(device, application_name, description)) != NULL)
+		return object;
+
+#else
 	if ((object = create_pulseaudio_object(device, application_name, description)) != NULL)
 		return object;
 	if ((object = create_alsa_object(device, application_name, description)) != NULL)
@@ -99,6 +104,7 @@ create_audio_device_object(const char *device,
 		return object;
 	if ((object = create_oss_object(device, application_name, description)) != NULL)
 		return object;
+#endif
 #endif
 	return NULL;
 }

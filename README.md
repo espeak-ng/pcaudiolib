@@ -14,6 +14,7 @@ devices. It supports:
 | Audio Framework | Operating System |
 |-----------------|------------------|
 | ALSA            | Linux            |
+| Coreaudio       | Mac OS           |
 | OSS             | POSIX            |
 | PulseAudio      | Linux            |
 | QSA             | QNX              |
@@ -53,6 +54,21 @@ Optional Libraries:
 |----------------|--------------------------------------------|
 | alsa           | `sudo apt-get install libasound2-dev`      |
 | pulseaudio     | `sudo apt-get install libpulse-dev`        |
+
+## Mac OS
+
+To enable Coreaudio output support you need to have the coreaudio framework on your system. Installing XCode along with the Mac OS SDK is the reccomended way of getting it.
+
+To compile Coreaudio support you will also need the TPCircularBuffer external implementation which is bundle  as a git submodule. To get it do:
+
+
+```bash
+
+git submodule init
+git submodule update
+```
+
+
 
 ## Building
 

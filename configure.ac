@@ -8,6 +8,7 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
+AC_CANONICAL_HOST
 
 dnl ================================================================
 dnl Program checks.
@@ -91,6 +92,32 @@ fi
 
 AC_SUBST(QSA_LIBS)
 
+
+dnl ================================================================
+dnl coreaudio checks.
+dnl ================================================================
+
+AC_ARG_WITH([coreaudio],
+    [AS_HELP_STRING([--with-coreaudio], [support for coreaudio audio output on Mac OS @<:@default=yes@:>@])],
+    [])
+
+if test "$with_coreaudio" = "no";then
+    echo "Disabling coreaudio audio output support"
+    have_coreaudio=no
+else
+    if test "${host_os}"="darwin";then
+        COREAUDIO_CFLAGS=-dynamiclib -fvisibility=default
+        COREAUDIO_LIBS="-framework CoreAudio -framework AudioToolbox -framework AudioUnit"
+        have_coreaudio=yes
+        AC_DEFINE(HAVE_COREAUDIO_H, [], [Do we have coreaudio?])
+    else
+        have_coreaudio=no
+    fi
+fi
+
+AC_SUBST(COREAUDIO_CFLAGS)
+AC_SUBST(COREAUDIO_LIBS)
+AM_CONDITIONAL([HAVE_COREAUDIO], [test "x${have_coreaudio}" = "xyes"])
 dnl ================================================================
 dnl OSS checks.
 dnl ================================================================
@@ -140,5 +167,6 @@ AC_MSG_NOTICE([
 	PulseAudio support:            ${have_pulseaudio}
 	ALSA support:                  ${have_alsa}
 	QSA support:                   ${have_qsa}
+	Coreaudio support:             ${have_coreaudio} 
 	OSS support:                   ${have_oss}
 ])
