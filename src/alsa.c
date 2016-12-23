@@ -18,7 +18,6 @@
  * along with pcaudiolib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <unistd.h>
 #include "config.h"
 #include "audio_priv.h"
 
@@ -26,6 +25,7 @@
 
 #include <alsa/asoundlib.h>
 #include <string.h>
+#include <unistd.h>
 
 struct alsa_object
 {
