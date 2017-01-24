@@ -3,6 +3,7 @@
 ## 1.1 - (In Development)
 
 *  Fix handling EBADFD, EPIPE and short write when writing to the ALSA device.
+*  Fix audio echos when using `snd_pcm_drop` in ALSA devices.
 *  Experimental support for Mac OS CoreAudio.
 
 ## 1.0 \[10 Sep 2016\]

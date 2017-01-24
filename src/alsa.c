@@ -33,6 +33,11 @@ struct alsa_object
 	snd_pcm_t *handle;
 	uint8_t sample_size;
 	char *device;
+	/* saved audio_object_open parameters */
+	int is_open;
+	enum audio_object_format format;
+	uint32_t rate;
+	uint8_t channels;
 };
 
 #define to_alsa_object(object) container_of(object, struct alsa_object, vtable)
@@ -113,6 +118,10 @@ alsa_object_open(struct audio_object *object,
 	if ((err = snd_pcm_prepare(self->handle)) < 0)
 		goto error;
 
+	self->is_open = 1;
+	self->format = format;
+	self->rate = rate;
+	self->channels = channels;
 	return 0;
 error:
 	if (params)
@@ -120,6 +129,7 @@ error:
 	if (self->handle) {
 		snd_pcm_close(self->handle);
 		self->handle = NULL;
+		self->is_open = 0;
 	}
 	return err;
 }
@@ -132,6 +142,7 @@ alsa_object_close(struct audio_object *object)
 	if (self->handle) {
 		snd_pcm_close(self->handle);
 		self->handle = NULL;
+		self->is_open = 1;
 	}
 }
 
@@ -160,14 +171,17 @@ alsa_object_drain(struct audio_object *object)
 int
 alsa_object_flush(struct audio_object *object)
 {
-	int ret = 0;
 	struct alsa_object *self = to_alsa_object(object);
+	if (!self) return 0;
 
-	if (self->handle) {
-		snd_pcm_drop(self->handle);
-		ret = snd_pcm_prepare(self->handle);
+	// Using snd_pcm_drop does not discard the audio, so reopen the device
+	// to reset the sound buffer.
+	if (self->is_open) {
+		audio_object_close(object);
+		return audio_object_open(object, self->format, self->rate, self->channels);
 	}
-	return ret;
+
+	return 0;
 }
 
 int
@@ -237,6 +251,7 @@ create_alsa_object(const char *device,
 	self->handle = NULL;
 	self->sample_size = 0;
 	self->device = device ? strdup(device) : NULL;
+	self->is_open = 0;
 
 	self->vtable.open = alsa_object_open;
 	self->vtable.close = alsa_object_close;
