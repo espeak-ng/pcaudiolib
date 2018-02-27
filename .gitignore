@@ -13,6 +13,8 @@
 src/libpcaudio.a
 src/libpcaudio.la
 
+pcaudiolib-*
+
 # autotools output:
 
 Makefile
