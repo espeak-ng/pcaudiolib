@@ -42,6 +42,11 @@ EXTRA_DIST += ChangeLog
 
 ############################# libpcaudio ######################################
 
+EXTRA_DIST += \
+	autogen.sh \
+	CHANGELOG.md \
+	README.md
+
 libpcaudio_includedir = $(includedir)/pcaudiolib
 libpcaudio_include_HEADERS = \
 	src/include/pcaudiolib/audio.h
@@ -64,11 +69,24 @@ src_libpcaudio_la_SOURCES = \
 	src/qsa.c \
 	src/oss.c \
 	src/pulseaudio.c \
+	src/audio_priv.h \
 	src/audio.c
 
+# Windows audio support
+EXTRA_DIST += \
+	src/windows.c \
+	src/xaudio2.cpp
+
+# Mac OSX audio support
 if HAVE_COREAUDIO
 src_libpcaudio_la_SOURCES += \
 	src/coreaudio.c \
 	src/TPCircularBuffer/TPCircularBuffer.c \
-	src/TPCircularBuffer/TPCircularBuffer+AudioBufferList.c
+	src/TPCircularBuffer/TPCircularBuffer.h \
+	src/TPCircularBuffer/TPCircularBuffer+AudioBufferList.c \
+	src/TPCircularBuffer/TPCircularBuffer+AudioBufferList.h
+
+EXTRA_DIST += \
+	src/TPCircularBuffer/README.markdown \
+	src/TPCircularBuffer/TPCircularBuffer.podspec
 endif
