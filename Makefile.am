@@ -9,7 +9,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES =
 
-EXTRA_DIST = config.rpath
+EXTRA_DIST =
 CLEANFILES =
 
 ############################# libtool #########################################
