@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([Portable C Audio Library], [1.0], [https://github.com/rhdunn/pcaudiolib/issues], [], [https://github.com/rhdunn/pcaudiolib])
+AC_INIT([pcaudiolib], [1.0], [https://github.com/rhdunn/pcaudiolib/issues], [], [https://github.com/rhdunn/pcaudiolib])
 AM_INIT_AUTOMAKE()
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES])
@@ -92,7 +92,6 @@ fi
 
 AC_SUBST(QSA_LIBS)
 
-
 dnl ================================================================
 dnl coreaudio checks.
 dnl ================================================================
@@ -121,6 +120,7 @@ fi
 AC_SUBST(COREAUDIO_CFLAGS)
 AC_SUBST(COREAUDIO_LIBS)
 AM_CONDITIONAL([HAVE_COREAUDIO], [test "x${have_coreaudio}" = "xyes"])
+
 dnl ================================================================
 dnl OSS checks.
 dnl ================================================================
