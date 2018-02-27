@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.1 - (In Development)
+## 1.1 - \[27 Feb 2018\]
 
 *  Fix handling EBADFD, EPIPE and short write when writing to the ALSA device.
 *  Fix audio echos when using `snd_pcm_drop` in ALSA devices.

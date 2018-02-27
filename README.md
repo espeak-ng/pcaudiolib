@@ -1,4 +1,4 @@
-# Portible C Audio Library
+# Portible C Audio Library 1.1
 
 - [Build Dependencies](#build-dependencies)
   - [Debian](#debian)
