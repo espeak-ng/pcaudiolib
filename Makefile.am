@@ -21,7 +21,7 @@ CURRENT=0
 
 # Increment  if source files have changed
 # Reset to 0 if the interface has changed
-REVISION=0
+REVISION=1
 
 # Increment  if the interface is backward compatible (superset)
 # Reset to 0 if the interface is not backward compatible
