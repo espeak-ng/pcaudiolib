@@ -53,7 +53,7 @@ alsa_object_open(struct audio_object *object,
 		return -EEXIST;
 
 	snd_pcm_format_t pcm_format;
-#define FORMAT(srcfmt, dstfmt, size) case srcfmt: pcm_format = dstfmt; self->sample_size = size; break;
+#define FORMAT(srcfmt, dstfmt, size) case srcfmt: pcm_format = dstfmt; self->sample_size = size*channels; break;
 	switch (format)
 	{
 	FORMAT(AUDIO_OBJECT_FORMAT_ALAW,      SND_PCM_FORMAT_A_LAW, 1)
