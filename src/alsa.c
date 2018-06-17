@@ -204,12 +204,18 @@ alsa_object_write(struct audio_object *object,
 			nToWrite -= nWritten;
 			data += nWritten * self->sample_size;
 			// Open question: if a signal caused the short read, should we snd_pcm_prepare?
-		} else if ((nWritten == -EPIPE) || (nWritten == -EBADFD)) {
+		} else if ((nWritten == -EPIPE)
+#ifdef EBADFD
+		    || (nWritten == -EBADFD)
+#endif
+		    ) {
 			// Either there was an underrun or the PCM was in a bad state.
 			err = snd_pcm_prepare(self->handle);
 			if (err != 0)
 				break;
-		} else if (nWritten == -ESTRPIPE) {
+		}
+#ifdef ESTRPIPE
+		else if (nWritten == -ESTRPIPE) {
 			// Sound suspended, try to resume.
 			do {
 				err = snd_pcm_resume(self->handle);
@@ -223,7 +229,9 @@ alsa_object_write(struct audio_object *object,
 			if (err < 0) {
 				break;
 			}
-		} else {
+		}
+#endif
+		else {
 			err = nWritten;
 			break;
 		}
