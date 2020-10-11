@@ -74,6 +74,13 @@ pulseaudio_object_open(struct audio_object *object,
 	}
 
 	int error = 0;
+	pa_buffer_attr battr;
+
+	battr.fragsize = (uint32_t) -1;
+	battr.maxlength = (uint32_t) -1;
+	battr.minreq = (uint32_t) -1;
+	battr.prebuf = (uint32_t) -1;
+	battr.tlength = pa_bytes_per_second(&self->ss) * LATENCY / 1000;
 	self->s = pa_simple_new(NULL,
 	                        self->application_name,
 	                        PA_STREAM_PLAYBACK,
@@ -81,7 +88,7 @@ pulseaudio_object_open(struct audio_object *object,
 	                        self->description,
 	                        &self->ss,
 	                        NULL,
-	                        NULL,
+	                        &battr,
 	                        &error);
 	return error;
 }

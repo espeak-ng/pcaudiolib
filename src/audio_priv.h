@@ -52,6 +52,10 @@ struct audio_object
 	                         int error);
 };
 
+/* We try to aim for 10ms cancelation latency, which will be perceived as
+ * "snappy" by users */
+#define LATENCY 10
+
 #if defined(_WIN32) || defined(_WIN64)
 
 #include <windows.h>
