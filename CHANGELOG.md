@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.2 - \[18 Aug 2021\]
+
+*  Fix cancellation snappiness
+*  Fix build on non-linux
+*  Alsa: fixed sample_size calculation, multiply with channel count.
+*  Fix some typos
+
 ## 1.1 - \[27 Feb 2018\]
 
 *  Fix handling EBADFD, EPIPE and short write when writing to the ALSA device.
