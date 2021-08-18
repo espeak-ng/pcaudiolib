@@ -28,12 +28,10 @@ various releases.
 
 In order to build the project, you need:
 
-1.  a functional autotools system (`make`, `autoconf`, `automake`, `libtool`
+1.  an autotools system (`make`, `autoconf`, `automake`, `libtool`
     and `pkg-config`);
-2.  a functional c compiler (e.g. gcc or clang).
+2.  a C compiler (e.g. gcc or clang).
 
-__NOTE:__ Some of the Windows SDK APIs (e.g. the XAudio2 headers) don't compile
-with a C compiler, so a C++ compiler is needed to compile them.
 
 Optionally, you need:
 
@@ -60,7 +58,12 @@ Optional Libraries:
 
 To enable CoreAudio output support you need to have the coreaudio framework on
 your system. Installing XCode along with the Mac OS SDK is the recommended way
-of getting it.
+of getting it. For Xcode on OS X 10.9 and earlier C11 compiler or newer is needed.
+
+### Windows
+
+Some of the Windows SDK APIs (e.g. the XAudio2 headers) don't compile
+with a C compiler, so a C++ compiler is needed to compile them.
 
 ## Building
 
