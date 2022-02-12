@@ -99,7 +99,7 @@ alsa_object_open(struct audio_object *object,
 
 	snd_pcm_hw_params_t *params = NULL;
 	snd_pcm_hw_params_malloc(&params);
-	snd_pcm_uframes_t bufsize = (rate * channels * LATENCY) / 1000;
+	snd_pcm_uframes_t bufsize = (rate * channels * LATENCY);
 
 	int err = 0;
 	if ((err = snd_pcm_open(&self->handle, self->device ? self->device : "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0)
