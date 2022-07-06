@@ -52,10 +52,7 @@ struct audio_object
 	                         int error);
 };
 
-/* We try to aim for 10ms cancelation latency, which will be perceived as
- * "snappy" by users. However, some systems (e.g. RPi) do produce chopped
- * audio when this value is smaller than 60.
- */
+/* 60ms is the minimum and default buffer size used by eSpeak */
 #define LATENCY 60
 
 #if defined(_WIN32) || defined(_WIN64)

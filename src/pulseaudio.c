@@ -80,7 +80,7 @@ pulseaudio_object_open(struct audio_object *object,
 	battr.maxlength = (uint32_t) -1;
 	battr.minreq = (uint32_t) -1;
 	battr.prebuf = (uint32_t) -1;
-	battr.tlength = pa_bytes_per_second(&self->ss) * LATENCY / 1000;
+	battr.tlength = pa_usec_to_bytes(LATENCY * 1000, &self->ss);
 	self->s = pa_simple_new(NULL,
 	                        self->application_name,
 	                        PA_STREAM_PLAYBACK,

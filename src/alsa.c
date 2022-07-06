@@ -99,7 +99,8 @@ alsa_object_open(struct audio_object *object,
 
 	snd_pcm_hw_params_t *params = NULL;
 	snd_pcm_hw_params_malloc(&params);
-	snd_pcm_uframes_t bufsize = (rate * channels * LATENCY) / 1000;
+	unsigned int period_time = LATENCY * 1000;
+	int dir = 0;
 
 	int err = 0;
 	if ((err = snd_pcm_open(&self->handle, self->device ? self->device : "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0)
@@ -114,7 +115,7 @@ alsa_object_open(struct audio_object *object,
 		goto error;
 	if ((err = snd_pcm_hw_params_set_channels(self->handle, params, channels)) < 0)
 		goto error;
-	if ((err = snd_pcm_hw_params_set_buffer_size_near(self->handle, params, &bufsize)) < 0)
+	if ((err = snd_pcm_hw_params_set_period_time_near(self->handle, params, &period_time, &dir)) < 0)
 		goto error;
 	if ((err = snd_pcm_hw_params(self->handle, params)) < 0)
 		goto error;
