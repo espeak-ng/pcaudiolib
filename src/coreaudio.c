@@ -256,7 +256,9 @@ const char *
 coreaudio_object_strerror(struct audio_object *object,
                            int error)
 {
-	return GetMacOSStatusCommentString(error);
+	static char res[40];
+	sprintf(res, "Runtime error %x", error);
+	return res;
 }
 
 static bool

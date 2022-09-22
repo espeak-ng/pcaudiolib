@@ -44,7 +44,7 @@ EXTRA_DIST += ChangeLog
 
 EXTRA_DIST += \
 	autogen.sh \
-	CHANGELOG.md \
+	ChangeLog.md \
 	README.md
 
 libpcaudio_includedir = $(includedir)/pcaudiolib

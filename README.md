@@ -21,7 +21,7 @@ devices. It supports:
 | QSA             | QNX              |
 | XAudio2         | Windows          |
 
-See the [CHANGELOG](CHANGELOG.md) for a description of the changes in the
+See the [ChangeLog](ChangeLog.md) for a description of the changes in the
 various releases.
 
 ## Build Dependencies
