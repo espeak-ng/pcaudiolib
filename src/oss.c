@@ -22,24 +22,16 @@
 #include "audio_priv.h"
 
 #if defined(HAVE_SYS_SOUNDCARD_H)
+
 #include <sys/soundcard.h>
-#define DEFAULT_OSS_DEVICE "/dev/dsp"
-#elif defined(HAVE_LINUX_SOUNDCARD_H)
-#include <linux/soundcard.h>
-#define DEFAULT_OSS_DEVICE "/dev/dsp"
-#elif defined(HAVE_SOUNDCARD_H)
-#include <soundcard.h>
-#define DEFAULT_OSS_DEVICE "/dev/dsp"
-#endif
-
-#ifdef DEFAULT_OSS_DEVICE
-
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+
+#define DEFAULT_OSS_DEVICE "/dev/dsp"
 
 struct oss_object
 {
