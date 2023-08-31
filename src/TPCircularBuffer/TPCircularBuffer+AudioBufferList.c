@@ -28,7 +28,7 @@
 //
 
 #include "TPCircularBuffer+AudioBufferList.h"
-#import <mach/mach_time.h>
+#include <mach/mach_time.h>
 
 static double __secondsToHostTicks = 0.0;
 

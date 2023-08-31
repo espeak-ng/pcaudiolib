@@ -43,8 +43,16 @@
 #define TPCircularBuffer_h
 
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 #include <assert.h>
+
+#ifdef __APPLE__
+#include <sys/cdefs.h>
+#ifndef __deprecated_msg
+#define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+#endif
+#endif
 
 #ifdef __cplusplus
     extern "C++" {
