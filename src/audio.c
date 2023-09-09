@@ -98,6 +98,8 @@ create_audio_device_object(const char *device,
 #else
 	if ((object = create_pulseaudio_object(device, application_name, description)) != NULL)
 		return object;
+	if ((object = create_sndio_object(device, application_name, description)) != NULL)
+		return object;
 	if ((object = create_alsa_object(device, application_name, description)) != NULL)
 		return object;
 	if ((object = create_qsa_object(device, application_name, description)) != NULL)
