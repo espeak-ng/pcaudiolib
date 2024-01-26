@@ -121,7 +121,7 @@ sun_object_close(struct audio_object *object)
 {
 	struct sun_object *self = to_sun_object(object);
 
-	if (self->fd == -1) {
+	if (self-> != -1) {
 		close(self->fd);
 		self->fd = -1;
 	}
