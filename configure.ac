@@ -146,7 +146,7 @@ dnl Sun checks.
 dnl ================================================================
 
 AC_ARG_WITH([sun],
-    [AS_HELP_STRING([--with-sun], [support for Sun audio output @<:@default=yes@:>@])],
+    [AS_HELP_STRING([--with-sun], [support for Sun audio output @<:@default=no@:>@])],
     [])
 
 if test "$with_sun" = "no"; then
