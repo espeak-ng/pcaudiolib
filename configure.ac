@@ -142,6 +142,29 @@ else
 fi
 
 dnl ================================================================
+dnl Sun checks.
+dnl ================================================================
+
+AC_ARG_WITH([sun],
+    [AS_HELP_STRING([--with-sun], [support for Sun audio output @<:@default=yes@:>@])],
+    [])
+
+if test "$with_sun" = "no"; then
+    echo "Disabling Sun audio output support"
+    have_sun=no
+else
+    case $host_os in
+        *netbsd*)
+            have_sun=yes
+	    ;;
+        *)
+            have_sun=no
+            ;;
+    esac
+fi
+AM_CONDITIONAL([HAVE_SUN], [test "x${have_sun}" = "xyes"])
+
+dnl ================================================================
 dnl Generate output.
 dnl ================================================================
 
@@ -162,4 +185,5 @@ AC_MSG_NOTICE([
 	QSA support:                   ${have_qsa}
 	Coreaudio support:             ${have_coreaudio} 
 	OSS support:                   ${have_oss}
+	Sun support:                   ${have_sun}
 ])

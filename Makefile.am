@@ -90,3 +90,9 @@ EXTRA_DIST += \
 	src/TPCircularBuffer/README.markdown \
 	src/TPCircularBuffer/TPCircularBuffer.podspec
 endif
+
+# Sun audio support
+if HAVE_SUN
+src_libpcaudio_la_SOURCES += \
+	src/sun.c
+endif
