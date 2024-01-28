@@ -91,8 +91,8 @@ EXTRA_DIST += \
 	src/TPCircularBuffer/TPCircularBuffer.podspec
 endif
 
-# Sun audio support
-if HAVE_SUN
+# NetBSD audio support
+if HAVE_NETBSD
 src_libpcaudio_la_SOURCES += \
-	src/sun.c
+	src/netbsd.c
 endif
