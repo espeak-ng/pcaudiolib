@@ -93,23 +93,26 @@ netbsd_object_open(struct audio_object *object,
 	if(i >= NETBSDFORMATS)
 		return EINVAL;
 
-	int data;
 	audio_info_t audioinfo;
 	if ((self->fd = open(self->device ? self->device : "/dev/audio", O_WRONLY, 0)) == -1)
 		return errno;
-	AUDIO_INITINFO(&audioinfo);
+	if (ioctl(self->fd, AUDIO_GETINFO, &audioinfo) == -1)
+		goto error;
 	audioinfo.play.sample_rate = rate;
 	audioinfo.play.channels = channels;
 	audioinfo.play.precision = aformat_netbsd_tbl[i].netbsd_precision;
-	audioinfo.play.encoding = aformat_netbsd_tbl[i].netbsd_format;	
+	audioinfo.play.encoding = aformat_netbsd_tbl[i].netbsd_format;
+	/* Use the high and low water marks to achieve the desired latency (LATENCY is in ms) */
+	audioinfo.hiwat = (rate * channels * audioinfo.play.precision * LATENCY) / (1000 * audioinfo.blocksize);
+	audioinfo.lowat = (audioinfo.hiwat * 70) / 100;
 	if (ioctl(self->fd, AUDIO_SETINFO, &audioinfo) == -1)
 		goto error;
+	ioctl(self->fd, AUDIO_GETINFO, &audioinfo);
 	return 0;
 error:
-	data = errno;
 	close(self->fd);
 	self->fd = -1;
-	return data;
+	return errno;
 }
 
 void

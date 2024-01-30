@@ -95,7 +95,7 @@ create_audio_device_object(const char *device,
 	if ((object = create_coreaudio_object(device, application_name, description)) != NULL)
 		return object;
 #else
-#if defined(_NETBSD)       
+#if defined(__NetBSD__)       
 	if ((object = create_netbsd_object(device, application_name, description)) != NULL)
 		return object;
 #else
