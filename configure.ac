@@ -142,6 +142,29 @@ else
 fi
 
 dnl ================================================================
+dnl NetBSD checks.
+dnl ================================================================
+
+AC_ARG_WITH([netbsd],
+    [AS_HELP_STRING([--with-netbsd], [support for NetBSD audio output @<:@default=no@:>@])],
+    [])
+
+if test "$with_netbsd" = "no"; then
+    echo "Disabling NetBSD audio output support"
+    have_netbsd=no
+else
+    case $host_os in
+        *netbsd*)
+            have_netbsd=yes
+	    ;;
+        *)
+            have_netbsd=no
+            ;;
+    esac
+fi
+AM_CONDITIONAL([HAVE_NETBSD], [test "x${have_netbsd}" = "xyes"])
+
+dnl ================================================================
 dnl Generate output.
 dnl ================================================================
 
@@ -162,4 +185,5 @@ AC_MSG_NOTICE([
 	QSA support:                   ${have_qsa}
 	Coreaudio support:             ${have_coreaudio} 
 	OSS support:                   ${have_oss}
+	NetBSD support:                ${have_netbsd}
 ])

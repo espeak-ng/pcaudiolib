@@ -52,8 +52,9 @@ struct audio_object
 	                         int error);
 };
 
-/* 60ms is the minimum and default buffer size used by eSpeak */
-#define LATENCY 60
+/* We try to aim for 10ms cancelation latency, which will be perceived as
+ * "snappy" by users */
+#define LATENCY 10
 
 #if defined(_WIN32) || defined(_WIN64)
 
@@ -84,6 +85,15 @@ create_xaudio2_object(const char *device,
 #define container_of(ptr, type, member) ({                      \
         const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
         (type *)( (char *)__mptr - offsetof(type,member) );})
+
+#ifdef __NetBSD__
+
+struct audio_object *
+create_netbsd_object(const char *device,
+                  const char *application_name,
+                  const char *description);
+
+#else
 
 #ifdef __APPLE__
 
@@ -116,7 +126,8 @@ create_oss_object(const char *device,
 
 #endif
 #endif
-
+#endif
+  
 #ifdef __cplusplus
 }
 #endif

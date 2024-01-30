@@ -90,3 +90,9 @@ EXTRA_DIST += \
 	src/TPCircularBuffer/README.markdown \
 	src/TPCircularBuffer/TPCircularBuffer.podspec
 endif
+
+# NetBSD audio support
+if HAVE_NETBSD
+src_libpcaudio_la_SOURCES += \
+	src/netbsd.c
+endif
