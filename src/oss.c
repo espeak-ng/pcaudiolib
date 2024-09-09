@@ -96,7 +96,7 @@ oss_object_close(struct audio_object *object)
 {
 	struct oss_object *self = to_oss_object(object);
 
-	if (self->fd == -1) {
+	if (self->fd != -1) {
 		close(self->fd);
 		self->fd = -1;
 	}
