@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([pcaudiolib], [1.2], [https://github.com/rhdunn/pcaudiolib/issues], [], [https://github.com/rhdunn/pcaudiolib])
+AC_INIT([pcaudiolib], [1.3], [https://github.com/espeak-ng/pcaudiolib/issues], [], [https://github.com/espeak-ng/pcaudiolib])
 AM_INIT_AUTOMAKE()
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES])
@@ -160,6 +160,6 @@ AC_MSG_NOTICE([
 	PulseAudio support:            ${have_pulseaudio}
 	ALSA support:                  ${have_alsa}
 	QSA support:                   ${have_qsa}
-	Coreaudio support:             ${have_coreaudio} 
+	Coreaudio support:             ${have_coreaudio}
 	OSS support:                   ${have_oss}
 ])
