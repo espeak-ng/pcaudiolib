@@ -67,6 +67,29 @@ AC_SUBST(ALSA_CFLAGS)
 AC_SUBST(ALSA_LIBS)
 
 dnl ================================================================
+dnl sndio checks.
+dnl ================================================================
+
+AC_ARG_WITH([sndio],
+    [AS_HELP_STRING([--with-sndio], [support for sndio audio output @<:@default=yes@:>@])],
+    [])
+
+AS_IF([test "x$with_sndio" = "xno"], [
+    echo "Disabling sndio audio output support";
+    have_sndio=no
+    ], [
+        PKG_CHECK_MODULES(SNDIO, [sndio],
+        [
+            AC_DEFINE(HAVE_SNDIO_H, [], [Do we have sndio])
+            have_sndio=yes
+        ],[
+            have_sndio=no
+        ])])
+
+AC_SUBST(SNDIO_CFLAGS)
+AC_SUBST(SNDIO_LIBS)
+
+dnl ================================================================
 dnl QSA checks.
 dnl ================================================================
 
@@ -162,4 +185,5 @@ AC_MSG_NOTICE([
 	QSA support:                   ${have_qsa}
 	Coreaudio support:             ${have_coreaudio}
 	OSS support:                   ${have_oss}
+	sndio support:                 ${have_sndio}
 ])

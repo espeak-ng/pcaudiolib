@@ -20,6 +20,7 @@ devices. It supports:
 | PulseAudio      | Linux            |
 | QSA             | QNX              |
 | XAudio2         | Windows          |
+| sndio           | BSD, Linux       |
 
 See the [ChangeLog](ChangeLog.md) for a description of the changes in the
 various releases.
@@ -53,6 +54,7 @@ Optional Libraries:
 |----------------|--------------------------------------------|
 | alsa           | `sudo apt-get install libasound2-dev`      |
 | pulseaudio     | `sudo apt-get install libpulse-dev`        |
+| sndio          | `sudo apt-get install libsndio-dev`        |
 
 ### Mac OS
 
